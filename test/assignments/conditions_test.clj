@@ -13,3 +13,16 @@
     (is (= 2 (informative-divide 4 2))))
   (testing "zero denominator"
     (is (= :infinite (informative-divide 3 0)))))
+
+(deftest harishchandra-truth
+  (testing "truthy value"
+    (are [x] (true? x)
+             (harishchandra 2)
+             (harishchandra [1 2])
+             (harishchandra '())
+             (harishchandra 0)
+             (harishchandra "")))
+  (testing "falsy value"
+    (are [x] (nil? x)
+             (harishchandra nil)
+             (harishchandra false))))
