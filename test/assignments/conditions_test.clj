@@ -32,3 +32,11 @@
     (is (= [1 1 2 3] (duplicate-first [1 2 3]))))
   (testing "empty"
     (is (= nil (duplicate-first [])))))
+
+(deftest five-point-someone-test
+  (testing "five point someone"
+    (are [x y] (= x y)
+               :chetan-bhagat (five-point-someone 4 5)
+               :satan-bhagat (five-point-someone 5 4)
+               :greece (five-point-someone 6 4)
+               :universe (five-point-someone 3 4))))
