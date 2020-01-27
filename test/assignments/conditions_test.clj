@@ -26,3 +26,9 @@
     (are [x] (nil? x)
              (harishchandra nil)
              (harishchandra false))))
+
+(deftest duplicate-first-test
+  (testing "non empty"
+    (is (= [1 1 2 3] (duplicate-first [1 2 3]))))
+  (testing "empty"
+    (is (= nil (duplicate-first [])))))
