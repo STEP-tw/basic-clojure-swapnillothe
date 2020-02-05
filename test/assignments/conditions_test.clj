@@ -30,11 +30,11 @@
 (deftest yudishtira-truth
   (testing "yudishtira's truthy values"
     (are [x y] (= x y)
-             2 (yudishtira 2)
-             [1 2] (yudishtira [1 2])
-             '() (yudishtira '())
-             0 (yudishtira 0)
-             "" (yudishtira "")))
+               2 (yudishtira 2)
+               [1 2] (yudishtira [1 2])
+               '() (yudishtira '())
+               0 (yudishtira 0)
+               "" (yudishtira "")))
   (testing "yudishtira's falsy value"
     (are [x] (= :ashwathama x)
              (yudishtira nil)
@@ -72,9 +72,16 @@
 (deftest zero-aliases-test
   (testing "zero aliases"
     (are [x y] (= x y)
-               :zero (zero-aliases 0)
-               :empty (zero-aliases [])
-               :empty (zero-aliases '())
-               :empty-set (zero-aliases #{})
-               :empty-map (zero-aliases {})
-               :empty-string (zero-aliases ""))))
+               (zero-aliases 0) :zero
+               (zero-aliases []) :empty
+               (zero-aliases '()) :empty
+               (zero-aliases #{}) :empty-set
+               (zero-aliases {}) :empty-map
+               (zero-aliases "") :empty-string)))
+
+(deftest order-in-words-test
+  (testing "order in words"
+    (are [x y] (= x y)
+               (order-in-words 4 3 2) [:x-greater-than-y :y-greater-than-z]
+               (order-in-words 4 3 5) [:x-greater-than-y :z-greater-than-x]
+               (order-in-words 4 3 2) [:x-greater-than-y :y-greater-than-z])))
