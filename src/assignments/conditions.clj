@@ -115,4 +115,7 @@
   {:level        :easy
    :use          '[as-> reverse]
    :implemented? false}
-  [coll])
+  [coll]
+  (as-> coll coll
+        (cons 0 coll)
+        (concat (reverse (rest coll)) coll)))

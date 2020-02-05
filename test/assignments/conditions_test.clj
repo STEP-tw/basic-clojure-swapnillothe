@@ -49,3 +49,8 @@
                :durga (conditions-apply '(:a :b :c))
                :cleopatra (conditions-apply [[:a :b] [2 3] [1 2] [4 5]])
                :tuntun (conditions-apply [4 5 2]))))
+
+
+(deftest zero-separated-palindrome-test
+  (testing "zero separated palindrome"
+    (is (= '(3 2 1 0 1 2 3) (zero-separated-palindrome [1 2 3])))))
