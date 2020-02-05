@@ -54,3 +54,14 @@
 (deftest zero-separated-palindrome-test
   (testing "zero separated palindrome"
     (is (= '(3 2 1 0 1 2 3) (zero-separated-palindrome [1 2 3])))))
+
+
+(deftest zero-aliases-test
+  (testing "zero aliases"
+    (are [x y] (= x y)
+               :zero (zero-aliases 0)
+               :empty (zero-aliases [])
+               :empty (zero-aliases '())
+               :empty-set (zero-aliases #{})
+               :empty-map (zero-aliases {})
+               :empty-string (zero-aliases ""))))
