@@ -128,5 +128,6 @@
    :implemented? true}
   [coll]
   (as-> coll coll
+        (map inc coll)
         (cons 0 coll)
         (concat (reverse (rest coll)) coll)))
