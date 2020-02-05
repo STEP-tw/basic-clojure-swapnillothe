@@ -63,7 +63,13 @@
    :use          '[condp filter]
    :alternates   '[if cond]
    :implemented? false}
-  [coll])
+  [coll]
+  (cond
+    (= '(1 2) (filter #(.contains '(1 2) %) coll)) :wonder-woman
+    (= '(:a :b :c) (filter #(.contains '(:a :b :c) %) coll)) :durga
+    (= '([2 3] [4 5]) (filter #(.contains '([2 3] [4 5]) %) coll)) :cleopatra
+    :else :tuntun))
+
 
 (defn repeat-and-truncate
   "Given coll and options to repeat and truncate

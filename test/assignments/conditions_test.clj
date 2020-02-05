@@ -40,3 +40,12 @@
                :satan-bhagat (five-point-someone 5 4)
                :greece (five-point-someone 6 4)
                :universe (five-point-someone 3 4))))
+
+
+(deftest conditions-apply-test
+  (testing "conditions apply"
+    (are [x y] (= x y)
+               :wonder-woman (conditions-apply [1 :a 2 3])
+               :durga (conditions-apply '(:a :b :c))
+               :cleopatra (conditions-apply [[:a :b] [2 3] [1 2] [4 5]])
+               :tuntun (conditions-apply [4 5 2]))))
