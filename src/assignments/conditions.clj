@@ -36,7 +36,7 @@
   {:level        :easy
    :use          '[when-first concat]
    :alternates   '[empty? seq? conj into]
-   :implemented? false}
+   :implemented? true}
   [coll] (when-first [v coll] (cons (first coll) coll)))
 
 (defn five-point-someone
@@ -46,7 +46,7 @@
   Otherwise it returns :universe"
   {:level        :easy
    :use          '[cond]
-   :implemented? false}
+   :implemented? true}
   [x y]
   (cond (= y 5) :chetan-bhagat
         (= x 5) :satan-bhagat
@@ -62,7 +62,7 @@
   {:level        :medium
    :use          '[condp filter]
    :alternates   '[if cond]
-   :implemented? false}
+   :implemented? true}
   [coll]
   (cond
     (= '(1 2) (filter #(.contains '(1 2) %) coll)) :wonder-woman
@@ -78,7 +78,7 @@
   (repeat-and-truncate (range 4) true true 6) => '(0 1 2 3 0 1)"
   {:level        :medium
    :use          '[cond->> concat take]
-   :implemented? false}
+   :implemented? true}
   [coll rep? truncate? n]
   (cond->> coll
            rep? (concat coll)

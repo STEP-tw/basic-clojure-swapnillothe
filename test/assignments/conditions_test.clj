@@ -90,5 +90,4 @@
                (repeat-and-truncate (range 4) true true 6) '(0 1 2 3 0 1)
                (repeat-and-truncate (range 4) true true 16) '(0 1 2 3 0 1 2 3)
                (repeat-and-truncate (range 4) true false 6) '(0 1 2 3 0 1 2 3)
-               (repeat-and-truncate (range 4) false true 6) '(0 1 2 3)
-               )))
+               (repeat-and-truncate (range 4) false true 6) '(0 1 2 3))))
