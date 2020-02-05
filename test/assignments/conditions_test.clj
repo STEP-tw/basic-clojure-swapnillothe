@@ -54,7 +54,6 @@
                :greece (five-point-someone 6 4)
                :universe (five-point-someone 3 4))))
 
-
 (deftest conditions-apply-test
   (testing "conditions apply"
     (are [x y] (= x y)
@@ -67,7 +66,6 @@
 (deftest zero-separated-palindrome-test
   (testing "zero separated palindrome"
     (is (= '(4 3 2 0 2 3 4) (zero-separated-palindrome [1 2 3])))))
-
 
 (deftest zero-aliases-test
   (testing "zero aliases"
@@ -84,4 +82,13 @@
     (are [x y] (= x y)
                (order-in-words 4 3 2) [:x-greater-than-y :y-greater-than-z]
                (order-in-words 4 3 5) [:x-greater-than-y :z-greater-than-x]
-               (order-in-words 4 3 2) [:x-greater-than-y :y-greater-than-z])))
+               (order-in-words 2 3 4) [:z-greater-than-x])))
+
+(deftest repeat-and-truncate-test
+  (testing "repeat and truncate"
+    (are [x y] (= x y)
+               (repeat-and-truncate (range 4) true true 6) '(0 1 2 3 0 1)
+               (repeat-and-truncate (range 4) true true 16) '(0 1 2 3 0 1 2 3)
+               (repeat-and-truncate (range 4) true false 6) '(0 1 2 3 0 1 2 3)
+               (repeat-and-truncate (range 4) false true 6) '(0 1 2 3)
+               )))
