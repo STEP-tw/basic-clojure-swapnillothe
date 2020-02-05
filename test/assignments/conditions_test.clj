@@ -27,6 +27,19 @@
              (harishchandra nil)
              (harishchandra false))))
 
+(deftest yudishtira-truth
+  (testing "yudishtira's truthy values"
+    (are [x y] (= x y)
+             2 (yudishtira 2)
+             [1 2] (yudishtira [1 2])
+             '() (yudishtira '())
+             0 (yudishtira 0)
+             "" (yudishtira "")))
+  (testing "yudishtira's falsy value"
+    (are [x] (= :ashwathama x)
+             (yudishtira nil)
+             (yudishtira false))))
+
 (deftest duplicate-first-test
   (testing "non empty"
     (is (= [1 1 2 3] (duplicate-first [1 2 3]))))
