@@ -14,6 +14,12 @@
                (filter' even? [1 2 3 4]) '(2 4)
                (filter' even? '(1 2 3 4)) '(2 4))))
 
+(deftest count-test
+  (testing "count"
+    (are [x y] (= x y)
+               (count'  [1 2 3 4]) 4
+               (count' '()) '0)))
+
 (deftest reduce-test
   (testing "reduce"
     (are [x y] (= x y)
