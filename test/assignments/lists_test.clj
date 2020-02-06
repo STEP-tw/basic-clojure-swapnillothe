@@ -20,6 +20,12 @@
                (count'  [1 2 3 4]) 4
                (count' '()) '0)))
 
+(deftest reverse-test
+  (testing "reverse"
+    (are [x y] (= x y)
+               (reverse'  [1 2 3 4]) '(4 3 2 1)
+               (reverse' '()) '())))
+
 (deftest reduce-test
   (testing "reduce"
     (are [x y] (= x y)
