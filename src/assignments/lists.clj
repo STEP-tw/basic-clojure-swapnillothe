@@ -34,9 +34,16 @@
   {:level        :medium
    :use          '[loop recur]
    :dont-use     '[reduce]
-   :implemented? false}
-  ([f coll])
-  ([f init coll]))
+   :implemented? true}
+  ([f init coll]
+   (loop [li coll result init]
+     (if (empty? li)
+       result
+       (recur (rest li) (f (first li) result)))))
+
+  ([f coll]
+   (reduce' f (first coll) (rest coll))))
+
 
 (defn count'
   "Implement your own version of count that counts the

@@ -3,9 +3,9 @@
             [assignments.lists :refer :all]))
 
 #_(deftest lists
-  (testing "map"
-    (testing "identity with single coll"
-      (is (= [1 2 3] (map' identity [1 2 3]))))))
+    (testing "map"
+      (testing "identity with single coll"
+        (is (= [1 2 3] (map' identity [1 2 3]))))))
 
 
 (deftest filter-test
@@ -13,3 +13,12 @@
     (are [x y] (= x y)
                (filter' even? [1 2 3 4]) '(2 4)
                (filter' even? '(1 2 3 4)) '(2 4))))
+
+(deftest reduce-test
+  (testing "reduce"
+    (are [x y] (= x y)
+               (reduce' + [1 2 3 4]) 10
+               (reduce' + 10 [1 2 3 4]) 20
+               (reduce' * '(1 2 3 4)) 24
+               (reduce' * 0 '(1 2 3 4)) 0)))
+
