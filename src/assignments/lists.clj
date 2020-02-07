@@ -232,8 +232,12 @@
   {:level        :easy
    :use          '[interleave split-at if rem concat take-last]
    :dont-use     '[loop recur map-indexed take drop]
-   :implemented? false}
-  [coll])
+   :implemented? true}
+  [coll]
+  (apply interleave
+         (split-at
+           (Math/floor (/ (count coll) 2))
+           coll)))
 
 (defn muted-thirds
   "Given a sequence of numbers, make every third element
@@ -243,7 +247,8 @@
    :use          '[map cycle]
    :dont-use     '[loop recur map-indexed take take-nth]
    :implemented? false}
-  [coll])
+  [coll]
+  (map (fn [x y] (if (zero? y) y x)) coll (cycle [1 2 0])))
 
 (defn palindrome?
   "Implement a recursive palindrome check of any given sequence"

@@ -20,6 +20,12 @@
                (count'  [1 2 3 4]) 4
                (count' '()) '0)))
 
+(deftest split-comb-test
+  (testing "split comb"
+    (are [x y] (= x y)
+               (split-comb  [1 2 3 4]) [1 3 2 4]
+               (split-comb [1 2 3 4 5]) [1 3 2 4])))
+
 (deftest reverse-test
   (testing "reverse"
     (are [x y] (= x y)
