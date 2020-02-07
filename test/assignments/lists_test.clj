@@ -17,19 +17,25 @@
 (deftest count-test
   (testing "count"
     (are [x y] (= x y)
-               (count'  [1 2 3 4]) 4
+               (count' [1 2 3 4]) 4
                (count' '()) '0)))
 
 (deftest split-comb-test
   (testing "split comb"
     (are [x y] (= x y)
-               (split-comb  [1 2 3 4]) [1 3 2 4]
+               (split-comb [1 2 3 4]) [1 3 2 4]
                (split-comb [1 2 3 4 5]) [1 3 2 4])))
+
+(deftest muted-thirds-test
+  (testing "muted thirds"
+    (are [x y] (= x y)
+               (muted-thirds [1 2 8 4 15 2 7]) [1 2 0 4 15 0 7]
+               (muted-thirds [1 2]) [1 2])))
 
 (deftest reverse-test
   (testing "reverse"
     (are [x y] (= x y)
-               (reverse'  [1 2 3 4]) '(4 3 2 1)
+               (reverse' [1 2 3 4]) '(4 3 2 1)
                (reverse' '()) '())))
 
 (deftest reduce-test

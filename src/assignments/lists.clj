@@ -246,7 +246,7 @@
   {:level        :easy
    :use          '[map cycle]
    :dont-use     '[loop recur map-indexed take take-nth]
-   :implemented? false}
+   :implemented? true}
   [coll]
   (map (fn [x y] (if (zero? y) y x)) coll (cycle [1 2 0])))
 
