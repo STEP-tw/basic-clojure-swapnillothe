@@ -32,6 +32,12 @@
                (muted-thirds [1 2 8 4 15 2 7]) [1 2 0 4 15 0 7]
                (muted-thirds [1 2]) [1 2])))
 
+(deftest ascending-test
+  (testing "ascending"
+    (are [x y] (= x y)
+               (ascending? [1 2 8 4 15 2 7]) false
+               (ascending? [1 2]) true)))
+
 (deftest reverse-test
   (testing "reverse"
     (are [x y] (= x y)
