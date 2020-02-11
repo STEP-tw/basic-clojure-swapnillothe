@@ -24,7 +24,7 @@
   (testing "split comb"
     (are [x y] (= x y)
                (split-comb [1 2 3 4]) [1 3 2 4]
-               (split-comb [1 2 3 4 5]) [1 3 2 4])))
+               (split-comb [1 2 3 4 5]) [1 3 2 4 5])))
 
 (deftest muted-thirds-test
   (testing "muted thirds"
