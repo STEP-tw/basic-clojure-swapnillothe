@@ -44,7 +44,7 @@
   (testing "non empty"
     (is (= [1 1 2 3] (duplicate-first [1 2 3]))))
   (testing "empty"
-    (is (= nil (duplicate-first [])))))
+    (is (nil? (duplicate-first [])))))
 
 (deftest five-point-someone-test
   (testing "five point someone"

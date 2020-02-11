@@ -66,7 +66,7 @@
    :dont-use     '[reverse]
    :implemented? true}
   ([coll]
-   (reduce conj () coll)))
+   (when (seqable? coll) (reduce conj () coll))))
 
 (defn every?'
   "Implement your own version of every? that checks if every
@@ -74,8 +74,12 @@
   {:level        :easy
    :use          '[loop recur and]
    :dont-use     '[every?]
-   :implemented? false}
-  ([pred coll]))
+   :implemented? true}
+  ([pred coll]
+   (loop [coll coll]
+     (or (empty? coll)
+         (and (pred (first coll))
+              (recur (rest coll)))))))
 
 (defn some?'
   "Implement your own version of some that checks if at least one
@@ -85,15 +89,19 @@
   {:level        :easy
    :use          '[loop recur or]
    :dont-use     '[some]
-   :implemented? false}
-  ([pred coll]))
+   :implemented? true}
+  ([pred coll]
+   (loop [coll coll]
+     (and (not (empty? coll))
+          (or (pred (first coll))
+              (recur (rest coll)))))))
 
 (defn ascending?
   "Verify if every element is greater than or equal to its predecessor"
   {:level        :easy
    :use          '[partition every? partial apply <=]
    :dont-use     '[loop recur]
-   :implemented? false}
+   :implemented? true}
   [coll]
   (every?
     (partial apply <=)
@@ -126,7 +134,8 @@
    :use          '[map + rest]
    :dont-use     '[loop recur partition]
    :implemented? false}
-  [coll])
+  [coll]
+  (map + coll (rest coll)))
 
 (defn max-three-digit-sequence
   "Given a collection of numbers, find a three digit sequence that
@@ -136,19 +145,25 @@
   {:level        :medium
    :use          '[map next nnext max-key partial apply + if ->>]
    :dont-use     '[loop recur partition]
-   :implemented? false}
-  [coll])
+   :implemented? true}
+  [coll]
+  (if (> 3 (count coll))
+    coll
+    (apply max-key
+           (partial apply +)
+           (map vector coll (next coll) (nnext coll)))))
 
 ;; transpose is a def. Not a defn.
 (def
   ^{:level        :easy
     :dont-use     '[loop recur for nth get]
-    :implemented? false}
+    :implemented? true}
   transpose
   "Transposes a given matrix.
   [[a b] [c d]] => [[a c] [b d]].
   Note this is a def. Not a defn.
-  Return a vector of vectors, not list of vectors or vectors of lists")
+  Return a vector of vectors, not list of vectors or vectors of lists"
+  #(apply mapv vector %))
 
 (defn difference
   "Given two collections, returns only the elements that are present
@@ -156,8 +171,9 @@
   {:level        :easy
    :use          '[remove set]
    :dont-use     '[loop recur if]
-   :implemented? false}
-  [coll1 coll2])
+   :implemented? true}
+  [coll1 coll2]
+  (remove #((set coll1) %) coll2))
 
 (defn union
   "Given two collections, returns a new collection with elements from the second
@@ -166,19 +182,21 @@
   if elements repeat."
   {:level        :easy
    :use          '[remove into set ->>]
-   :implemented? false}
-  [coll1 coll2])
+   :implemented? true}
+  [coll1 coll2]
+  (into (vec coll1) (remove #((set coll1) %) coll2)))
 
 ;; points-around-origin is a def not a defn
 (def
   ^{:level        :easy
     :use          '[for]
     :dont-use     '[hardcoded-values map filter]
-    :implemented? false}
+    :implemented? true}
   points-around-origin
   "Calculate all the points around the origin
   [-1 -1] [0 -1] [1 -1] etc. There should be 8 points
-  Note this is a def, not a defn")
+  Note this is a def, not a defn"
+  (for [a (range -1 2) b (range -1 2) :when (not= [a b] [0 0])] [a b]))
 
 (defn cross-product
   "Given two sequences, generate every combination in the sequence
@@ -187,24 +205,29 @@
   [[1 4] [1 3] [1 5] [2 4] [2 3] [2 5] [3 4]]"
   {:level        :easy
    :use          '[for]
-   :implemented? false}
-  [seq1 seq2])
+   :implemented? true}
+  [seq1 seq2]
+  (for [a seq1 b seq2 :while (not= a b)] [a b]))
 
 (defn double-up
   "Given a collection, return a new collection that contains
   each element repeated twice"
   {:level        :easy
    :use          '[mapcat partial repeat :optionally vector]
-   :implemented? false}
-  [coll])
+   :implemented? true}
+  [coll]
+  (mapcat (partial repeat 2) coll))
 
 (defn third-or-fifth
   "Given a collection return a new collection that contains
   elements whose index is either divisible by three or five"
   {:level        :easy
    :use          '[keep-indexed when :optionally map-indexed filter]
-   :implemented? false}
-  [coll])
+   :implemented? true}
+  [coll]
+  (keep-indexed
+    #(when (some (comp zero? (partial rem %)) [3 5]) %2)
+    coll))
 
 (defn sqr-of-the-first
   "Given a collection, return a new collection that contains the
@@ -213,8 +236,10 @@
   [4 5 6] => [16 16 16]"
   {:level        :easy
    :use          '[map constantly let]
-   :implemented? false}
-  [coll])
+   :implemented? true}
+  [coll]
+  (let [first-element-square (* (first coll) (first coll))]
+    (map (constantly first-element-square) coll)))
 
 (defn russian-dolls
   "Given a collection and a number, wrap each element in a nested vector
@@ -223,8 +248,9 @@
   {:level        :medium
    :use          '[iterate mapv partial vector drop first ->>]
    :dont-use     '[for loop recur reduce]
-   :implemented? false}
-  [coll nesting-factor])
+   :implemented? true}
+  [coll nesting-factor]
+  (mapv #(nth (iterate vector %) (dec nesting-factor)) coll))
 
 (defn split-comb
   "Given a collection, return a new sequence where the first
@@ -237,10 +263,8 @@
    :dont-use     '[loop recur map-indexed take drop]
    :implemented? true}
   [coll]
-  (apply interleave
-         (split-at
-           (Math/floor (/ (count coll) 2))
-           coll)))
+  (let [splited-comb (apply interleave (split-at (quot (count coll) 2) coll))]
+    (concat splited-comb (take-last (rem (count coll) 2) coll))))
 
 (defn muted-thirds
   "Given a sequence of numbers, make every third element
@@ -251,15 +275,19 @@
    :dont-use     '[loop recur map-indexed take take-nth]
    :implemented? true}
   [coll]
-  (map (fn [x y] (if (zero? y) y x)) coll (cycle [1 2 0])))
+  (map * coll (cycle [1 1 0])))
 
 (defn palindrome?
   "Implement a recursive palindrome check of any given sequence"
   {:level        :easy
    :use          '[empty? loop recur butlast rest]
    :dont-use     '[reverse]
-   :implemented? false}
-  [coll])
+   :implemented? true}
+  [coll]
+  (loop [coll coll]
+    (or (empty? coll)
+        (and (= (first coll) (last coll))
+             (recur ((comp rest butlast) coll))))))
 
 (defn index-of
   "index-of takes a sequence and an element and finds the index
@@ -268,8 +296,14 @@
   {:level        :easy
    :use          '[loop recur rest]
    :dont-use     '[.indexOf memfn]
-   :implemented? false}
-  [coll n])
+   :implemented? true}
+  [coll n]
+  (loop [coll coll current-index 0]
+    (if (empty? coll)
+      -1
+      (if (= (first coll) n)
+        current-index
+        (recur (rest coll) (inc current-index))))))
 
 (defn validate-sudoku-grid
   "Given a 9 by 9 sudoku grid, validate it."
